@@ -1,0 +1,12 @@
+{
+    "users": [
+        {
+            "name": "JaneDoe",
+            "height": 170.0
+        },
+        {
+            "name": "JohnDoe",
+            "height": 180.0
+        }
+    ]
+}
