@@ -160,6 +160,81 @@ function renderChart(data) {
                 intersect: false,
             },
             plugins: {
+                annotation: activeMetrics.has('bmi') ? {
+                    annotations: {
+                        underweight: {
+                            type: 'box',
+                            yMin: 16,
+                            yMax: 18.5,
+                            yScaleID: 'y1',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)', // cyan
+                            borderWidth: 0,
+                            label: {
+                                display: true,
+                                content: 'Underweight (<18.5)',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                position: 'start'
+                            }
+                        },
+                        normal: {
+                            type: 'box',
+                            yMin: 18.5,
+                            yMax: 25,
+                            yScaleID: 'y1',
+                            backgroundColor: 'rgba(34, 197, 94, 0.1)', // green
+                            borderWidth: 0,
+                            label: {
+                                display: true,
+                                content: 'Normal (18.5-25)',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                position: 'start'
+                            }
+                        },
+                        overweight: {
+                            type: 'box',
+                            yMin: 25,
+                            yMax: 30,
+                            yScaleID: 'y1',
+                            backgroundColor: 'rgba(234, 179, 8, 0.1)', // yellow
+                            borderWidth: 0,
+                            label: {
+                                display: true,
+                                content: 'Overweight (25-30)',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                position: 'start'
+                            }
+                        },
+                        obese: {
+                            type: 'box',
+                            yMin: 30,
+                            yMax: 40, // arbitrarily high to cover upper chart area
+                            yScaleID: 'y1',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)', // red
+                            borderWidth: 0,
+                            label: {
+                                display: true,
+                                content: 'Obese (≥30)',
+                                color: 'rgba(255, 255, 255, 0.5)',
+                                position: 'start'
+                            }
+                        }
+                    }
+                } : {},
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'x',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'x',
+                    }
+                },
                 legend: {
                     position: 'top',
                     labels: { boxWidth: 12, usePointStyle: true }
@@ -183,13 +258,13 @@ function renderChart(data) {
                     position: 'left',
                     title: { display: true, text: 'Weight (kg)' },
                 },
-                y1: {
+                y1: Object.assign({
                     type: 'linear',
                     display: true,
                     position: 'right',
                     title: { display: true, text: 'Other Metrics' },
                     grid: { drawOnChartArea: false },
-                },
+                }, activeMetrics.has('bmi') ? { min: 16, max: 40 } : {}),
             },
             animation: {
                 duration: 2000,
@@ -256,6 +331,9 @@ function initListeners() {
                 }
             } else {
                 activeMetrics.add(metric);
+            }
+            if (chartInstance) {
+                chartInstance.resetZoom();
             }
             // Trigger chart re-render using existing data by just calling fetch again
             // Or ideally store data globally, but fetch is fast locally.
