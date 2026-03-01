@@ -73,7 +73,7 @@ async def lifespan(app: FastAPI):
     yield
     # Cleanup
 
-app = FastAPI(title="Mi Body Composition API", lifespan=lifespan)
+app = FastAPI(title="Mi Body Composition API", version="0.0.1", lifespan=lifespan)
 
 from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
