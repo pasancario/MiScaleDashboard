@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Body Composition Dashboard</title>
+    <!-- Modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>My Health Overview</h1>
+            <p id="lastSync">Last Synced: Syncing...</p>
+        </header>
+
+        <section class="filters-section glass">
+            <div class="filter-group">
+                <label for="userSelect">User:</label>
+                <select id="userSelect">
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="startDate">From:</label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="filter-group">
+                <label for="endDate">To:</label>
+                <input type="date" id="endDate">
+            </div>
+            <div class="filter-group preset-buttons">
+                <button id="btn1Year" class="preset-btn active">1 Year</button>
+                <button id="btnAllTime" class="preset-btn">All Time</button>
+            </div>
+        </section>
+
+        <section class="summary-cards">
+            <div class="card glass metric-card" id="card-weight" data-metric="weight">
+                <div class="card-icon weight-icon"></div>
+                <div class="card-title">Weight</div>
+                <div class="card-value" id="latestWeight">-- kg</div>
+            </div>
+            <div class="card glass metric-card" id="card-body_fat" data-metric="body_fat">
+                <div class="card-icon fat-icon"></div>
+                <div class="card-title">Body Fat</div>
+                <div class="card-value" id="latestBodyFat">-- %</div>
+            </div>
+            <div class="card glass metric-card" id="card-muscle_mass" data-metric="muscle_mass">
+                <div class="card-icon muscle-icon"></div>
+                <div class="card-title">Muscle Mass</div>
+                <div class="card-value" id="latestMuscleMass">-- kg</div>
+            </div>
+            <div class="card glass metric-card" id="card-water_percentage" data-metric="water_percentage">
+                <div class="card-icon water-icon"></div>
+                <div class="card-title">Body Water</div>
+                <div class="card-value" id="latestWater">-- %</div>
+            </div>
+            <div class="card glass metric-card" id="card-bmi" data-metric="bmi">
+                <div class="card-icon bmi-icon"></div>
+                <div class="card-title">BMI</div>
+                <div class="card-value" id="latestBMI">--</div>
+            </div>
+        </section>
+
+        <section class="charts-section glass">
+            <h2>Historic Trends</h2>
+            <div class="chart-container">
+                <canvas id="weightChart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <!-- Frontend logic to fetch and render data -->
+    <script src="app.js"></script>
+</body>
+
+</html>
